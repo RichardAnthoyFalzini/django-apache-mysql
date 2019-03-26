@@ -1,0 +1,51 @@
+version: "2"
+services:
+  django:
+    container_name: francalancia_server
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        - PROJECT_DIR=/var/www/django/francalanciaPortal
+        - PROJECT_NAME=francalanciaPortal
+    image: docker_francalancia
+    stdin_open: true
+    tty: true
+    volumes:
+      - ./data/django:/var/www/django
+#      - ./data/apache/conf:/usr/local/apache2/conf
+      - ./data/apache/sites-available:/etc/apache2/sites-available
+
+    ports:
+      - "80:80"
+      - "443:443"
+    links:
+      - db
+    environment:
+      - MYSQL_DATABASE=francalanciaPortal
+      - MYSQL_USER=francalanciaPortal
+      - MYSQL_HOST=db
+      - MYSQL_PASSWORD=keregramshiborel
+      - MYSQL_ROOT_PASSWORD=diavoloSql
+      - PROJECT_DIR=/var/www/django/francalanciaPortal
+      - PROJECT_NAME=francalanciaPortal
+     #- DATABASE_URL=mysql://root:secret@db:3306/registracinesi_db
+
+
+  db:
+    container_name: mysql_database
+    image: mysql:5.7
+    entrypoint: ['/entrypoint.sh', '--default-authentication-plugin=mysql_native_password']
+    ports:
+      - "3306:3306"
+    environment:
+        - MYSQL_DATABASE=francalanciaPortal
+        - MYSQL_USER=francalanciaPortal
+        - MYSQL_HOST=db
+        - MYSQL_PASSWORD=keregramshiborel
+        - MYSQL_ROOT_PASSWORD=diavoloSql
+        - MYSQL_PORT=3306
+    volumes:
+      - ./data/mysql:/var/lib/mysql
+#      - "./db:/var/lib/mysql" <--- this guy here
+#      - ./data/mysql:/var/run/mysqld/

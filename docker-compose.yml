@@ -1,14 +1,14 @@
 version: "2"
 services:
   django:
-    container_name: francalancia_server
+    container_name: myproject_server
     build:
       context: .
       dockerfile: Dockerfile
       args:
-        - PROJECT_DIR=/var/www/django/francalanciaPortal
-        - PROJECT_NAME=francalanciaPortal
-    image: docker_francalancia
+        - PROJECT_DIR=/var/www/django/myproject
+        - PROJECT_NAME=myproject
+    image: docker_myproject
     stdin_open: true
     tty: true
     volumes:
@@ -22,13 +22,13 @@ services:
     links:
       - db
     environment:
-      - MYSQL_DATABASE=francalanciaPortal
-      - MYSQL_USER=francalanciaPortal
+      - MYSQL_DATABASE=myproject
+      - MYSQL_USER=myproject
       - MYSQL_HOST=db
-      - MYSQL_PASSWORD=keregramshiborel
-      - MYSQL_ROOT_PASSWORD=diavoloSql
-      - PROJECT_DIR=/var/www/django/francalanciaPortal
-      - PROJECT_NAME=francalanciaPortal
+      - MYSQL_PASSWORD=UserSQLPasswordChangeIy
+      - MYSQL_ROOT_PASSWORD=rootSQLPasswordChangeIy
+      - PROJECT_DIR=/var/www/django/myproject
+      - PROJECT_NAME=myproject
      #- DATABASE_URL=mysql://root:secret@db:3306/registracinesi_db
 
 
@@ -39,11 +39,11 @@ services:
     ports:
       - "3306:3306"
     environment:
-        - MYSQL_DATABASE=francalanciaPortal
-        - MYSQL_USER=francalanciaPortal
+        - MYSQL_DATABASE=myproject
+        - MYSQL_USER=myproject
         - MYSQL_HOST=db
-        - MYSQL_PASSWORD=keregramshiborel
-        - MYSQL_ROOT_PASSWORD=diavoloSql
+        - MYSQL_PASSWORD=UserSQLPasswordChangeIy
+        - MYSQL_ROOT_PASSWORD=rootSQLPasswordChangeIy
         - MYSQL_PORT=3306
     volumes:
       - ./data/mysql:/var/lib/mysql
